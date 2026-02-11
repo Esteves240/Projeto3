@@ -20,7 +20,41 @@ Sempre que adicionar uma transação:
 Pergunta:
 O que deve acontecer quando a página recarrega?
 */
-import { transacoes } from "./modules/datateste.js";
+
+
 import { renderTrasacoes } from "./modules/ui.js";
 
-renderTrasacoes(transacoes);
+// Seleção de elementos do DOM
+const btnAdicionar = document.querySelector(".adiciona-historia");// Botão para adicionar transação
+const descricaoInput = document.getElementById("descricao");// Input para descrição da transação
+const valorInput = document.getElementById("quantidade");// Input para valor da transação
+const tipoSelect = document.getElementById("tipo-transacao");// Select para tipo de transação (receita ou despesa)
+
+let transacoes = [];
+
+btnAdicionar.addEventListener("click", () => {
+  
+  const descricao = descricaoInput.value.trim();
+  const valor = Number(valorInput.value);
+  const tipo = tipoSelect.value;
+
+  if (!descricao || !valor) {
+    alert("Preenche todos os campos!");
+    return;
+  }
+
+  const novaTransacao = {
+    transacao: descricao,
+    categoria: tipo === "receita" ? "Receita" : "Despesa",
+    data: new Date().toLocaleDateString(),
+    valor: valor
+  };
+
+  transacoes.push(novaTransacao);
+
+  renderTrasacoes(transacoes);
+
+  // limpar campos do form depois de adicionar
+  descricaoInput.value = "";
+  valorInput.value = "";
+});
