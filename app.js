@@ -20,3 +20,7 @@ Sempre que adicionar uma transação:
 Pergunta:
 O que deve acontecer quando a página recarrega?
 */
+import { transacoes } from "./modules/datateste.js";
+import { renderTrasacoes } from "./modules/ui.js";
+
+renderTrasacoes(transacoes);
