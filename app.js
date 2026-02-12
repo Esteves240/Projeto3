@@ -42,6 +42,11 @@ setTransacoes(dadosGuardados);
 renderTrasacoes(getTransacoes());
 
 
+//Resumo do inicio
+const resumo = calcularResumo(getTransacoes());
+renderResumo(resumo);
+
+
 btnAdicionar.addEventListener("click", () => {
   
   const descricao = descricaoInput.value.trim();
@@ -79,12 +84,3 @@ const resumoAtualizado = calcularResumo(getTransacoes());
   descricaoInput.value = "";
   valorInput.value = "";
 });
-
-
-
-
-//Resumo do inicio
-const resumo = calcularResumo(getTransacoes());
-renderResumo(resumo);
-
-
