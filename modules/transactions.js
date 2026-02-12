@@ -29,12 +29,12 @@ Não escreva loops tradicionais.
 export function calcularResumo(transacoes) {
 
   const totalReceitas = transacoes
-    .filter(t => t.categoria === "Receita")
-    .reduce((acc, t) => acc + t.valor, 0);
+    .filter(transacao => transacao.categoria === "Receita")
+    .reduce((acumulador, transacao) => acumulador + transacao.valor, 0);
 
   const totalDespesas = transacoes
-    .filter(t => t.categoria === "Despesa")
-    .reduce((acc, t) => acc + t.valor, 0);
+    .filter(transacao => transacao.categoria === "Despesa")
+    .reduce((acumulador, transacao) => acumulador + transacao.valor, 0);
 
   const saldo = totalReceitas - totalDespesas;
 
