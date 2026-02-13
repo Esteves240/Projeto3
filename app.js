@@ -24,10 +24,11 @@ O que deve acontecer quando a página recarrega?
 
 import { renderTrasacoes } from "./modules/ui.js";
 import { saveToStorage, loadFromStorage } from "./modules/storage.js";
-import { getTransacoes, setTransacoes, addTransacao } from "./modules/state.js";
+import { getTransacoes, setTransacoes, addTransacao, removeTransacao} from "./modules/state.js";
 
 import { calcularResumo } from "./modules/transactions.js";
 import { renderResumo } from "./modules/ui.js";
+
 
 // Seleção de elementos do DOM
 const btnAdicionar = document.querySelector(".adiciona-historia");// Botão para adicionar transação
@@ -36,15 +37,30 @@ const valorInput = document.getElementById("quantidade");// Input para valor da 
 const tipoSelect = document.getElementById("tipo-transacao");// Select para tipo de transação (receita ou despesa)
 
 
+function atualizarUI() {
+  const transacoes = getTransacoes();
+
+  renderTrasacoes(transacoes, handleDelete);
+
+  const resumo = calcularResumo(transacoes);
+  renderResumo(resumo);
+
+  saveToStorage(transacoes);
+}
+
+
+function handleDelete(id) {
+  removeTransacao(id);
+  atualizarUI();
+}
+
+
 //Ao iniciar app -> carregar do storage
 const dadosGuardados = loadFromStorage();
 setTransacoes(dadosGuardados);
-renderTrasacoes(getTransacoes());
+//renderTrasacoes(getTransacoes());
+atualizarUI()
 
-
-//Resumo do inicio
-const resumo = calcularResumo(getTransacoes());
-renderResumo(resumo);
 
 
 btnAdicionar.addEventListener("click", () => {
@@ -64,6 +80,7 @@ btnAdicionar.addEventListener("click", () => {
   }
 
   const novaTransacao = {
+    id: Date.now(),
     transacao: descricao,
     categoria: tipo === "receita" ? "Receita" : "Despesa",
     data: new Date().toLocaleDateString(),
@@ -71,14 +88,8 @@ btnAdicionar.addEventListener("click", () => {
   };
 
   addTransacao(novaTransacao);
+  atualizarUI();
 
-  renderTrasacoes(getTransacoes());
-
-  //atuaizar os 3 resumos do inicio
-const resumoAtualizado = calcularResumo(getTransacoes());
-    renderResumo(resumoAtualizado);
-
-  saveToStorage(getTransacoes()); //guardar sempre após alteração
 
   // limpar campos do form depois de adicionar
   descricaoInput.value = "";
