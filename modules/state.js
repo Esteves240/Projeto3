@@ -37,3 +37,8 @@ export function setTransacoes(novas) {
 export function addTransacao(transacao) {
   transacoes.push(transacao);
 }
+
+// Função para remover transação por ID
+export function removeTransacao(id) {
+  transacoes = transacoes.filter(transacao => transacao.id !== id);
+}
