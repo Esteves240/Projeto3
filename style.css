@@ -132,6 +132,15 @@ body {
     cursor: pointer;
 }
 
+.theme{
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .main {
     grid-area: main;
     padding: 40px;
@@ -140,6 +149,10 @@ body {
     flex-direction: column;
     gap: 48px; 
     align-items: center; 
+}
+
+.main.dark{
+    background-color: #e9edeb;
 }
 
 /* .transacoes, .cards-container {
